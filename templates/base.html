@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fake Text Detector</title>
+  <style>
+    body {
+    background-image: url('/static/img.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+    nav {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      display: flex;
+      gap: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #007BFF;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .flash {
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+    .flash.success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .flash.danger {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    label {
+      font-weight: 600;
+    }
+    input[type=text], input[type=password], textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    input[type=submit] {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 150px;
+      align-self: flex-start;
+    }
+    input[type=submit]:hover {
+      background-color: #0056b3;
+    }
+    .bottom-link {
+      margin-top: 15px;
+    }
+    .bottom-link a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .bottom-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<nav>
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('history') }}">Home</a>
+    <a href="{{ url_for('dashboard') }}">Make Prediction</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  {% else %}
+    {% if request.path not in [url_for('login'), url_for('register')] %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  {% endif %}
+</nav>
+
+<div class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="flash {{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</div>
+</body>
+</html>

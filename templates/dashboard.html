@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Make a Prediction</h2>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{ form.text1.label }}<br>
+  {{ form.text1(rows=6) }}<br>
+  {{ form.text2.label }}<br>
+  {{ form.text2(rows=6) }}<br>
+  {{ form.submit() }}
+</form>
+{% endblock %}

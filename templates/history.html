@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Prediction History</h2>
+
+{% if predictions %}
+  <table style="width:100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border-bottom:1px solid #ddd; padding:8px;">#</th>
+        <th style="border-bottom:1px solid #ddd; padding:8px;">Text 1 (preview)</th>
+        <th style="border-bottom:1px solid #ddd; padding:8px;">Text 2 (preview)</th>
+        <th style="border-bottom:1px solid #ddd; padding:8px;">Result</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in predictions %}
+      <tr>
+        <td style="border-bottom:1px solid #ddd; padding:8px;">{{ loop.index }}</td>
+        <td style="border-bottom:1px solid #ddd; padding:8px;">{{ p.text1[:50] }}{% if p.text1|length > 50 %}...{% endif %}</td>
+        <td style="border-bottom:1px solid #ddd; padding:8px;">{{ p.text2[:50] }}{% if p.text2|length > 50 %}...{% endif %}</td>
+        <td style="border-bottom:1px solid #ddd; padding:8px; font-weight: bold;">
+          {{ p.result|capitalize }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No prediction history yet.</p>
+{% endif %}
+{% endblock %}
